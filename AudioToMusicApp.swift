@@ -156,6 +156,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func chooseFolder() {
         let panel = NSOpenPanel()
+        panel.title = "Select Music Folder"
+        panel.prompt = "Select Folder"
+        panel.message = "Choose a folder to scan. Supported audio files in nested folders will be included."
         panel.allowedContentTypes = [.folder]
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
@@ -183,7 +186,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func updateSelection() {
         let files = filesToConvert()
         let summary = sources.map(\.path).joined(separator: "\n")
-        sourceSummary.stringValue = summary + "\n\(files.count) supported audio file(s) found"
+        sourceSummary.stringValue = summary + "\n\(files.count) supported audio file(s) found (including nested folders)"
         convertButton.isEnabled = !files.isEmpty
     }
 
