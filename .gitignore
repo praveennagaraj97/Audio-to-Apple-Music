@@ -1,0 +1,9 @@
+.DS_Store
+/build/
+/ffmpeg-9.0.2/
+/ffmpeg-stage/
+/package-root/
+/Converted/
+/Acceptance Smoke/
+/*.pkg
+/AppIcon.icns
