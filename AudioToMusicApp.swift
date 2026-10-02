@@ -55,6 +55,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var progress: NSProgressIndicator!
     private var status: NSTextField!
     private var convertButton: NSButton!
+    private var clearButton: NSButton!
+    private var isConverting = false
     private var reportsStack: NSStackView!
     private var reportScroll: NSScrollView!
 
@@ -81,14 +83,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         subtitle.textColor = .secondaryLabelColor
         root.addArrangedSubview(subtitle)
 
-        let sourceButtons = NSStackView()
-        sourceButtons.orientation = .horizontal
-        sourceButtons.spacing = 10
-        sourceButtons.addArrangedSubview(button("Choose Audio Files…", #selector(chooseFiles)))
-        sourceButtons.addArrangedSubview(button("Choose Folder…", #selector(chooseFolder)))
-        root.addArrangedSubview(sourceButtons)
+        let selectionButtons = NSStackView()
+        selectionButtons.orientation = .horizontal
+        selectionButtons.spacing = 10
+        selectionButtons.addArrangedSubview(button("Choose Files or Folder…", #selector(chooseSources)))
+        clearButton = button("Clear", #selector(clearSelection))
+        clearButton.isEnabled = false
+        selectionButtons.addArrangedSubview(clearButton)
+        root.addArrangedSubview(selectionButtons)
 
-        sourceSummary = NSTextField(wrappingLabelWithString: "Choose audio files or a folder to scan.")
+        sourceSummary = NSTextField(wrappingLabelWithString: "Choose audio files and/or folders to scan.")
         sourceSummary.textColor = .secondaryLabelColor
         sourceSummary.maximumNumberOfLines = 3
         root.addArrangedSubview(sourceSummary)
@@ -145,25 +149,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return result
     }
 
-    @objc private func chooseFiles() {
+    @objc private func chooseSources() {
         let panel = NSOpenPanel()
-        panel.allowedContentTypes = supportedExtensions.compactMap { UTType(filenameExtension: $0) }
+        panel.title = "Choose Audio Files or Folders"
+        panel.prompt = "Add to Selection"
+        panel.message = "Choose supported audio files, folders, or both. Folders are scanned recursively."
+        panel.allowedContentTypes = supportedExtensions.compactMap { UTType(filenameExtension: $0) } + [.folder]
         panel.canChooseFiles = true
-        panel.canChooseDirectories = false
-        panel.allowsMultipleSelection = true
-        if panel.runModal() == .OK { sources = panel.urls; updateSelection() }
-    }
-
-    @objc private func chooseFolder() {
-        let panel = NSOpenPanel()
-        panel.title = "Select Music Folder"
-        panel.prompt = "Select Folder"
-        panel.message = "Choose a folder to scan. Supported audio files in nested folders will be included."
-        panel.allowedContentTypes = [.folder]
-        panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        if panel.runModal() == .OK { sources = panel.urls; updateSelection() }
+        if panel.runModal() == .OK {
+            sources = Array(Set(sources + panel.urls)).sorted { $0.path.localizedStandardCompare($1.path) == .orderedAscending }
+            updateSelection()
+        }
+    }
+
+    @objc private func clearSelection() {
+        guard !isConverting else { return }
+        sources.removeAll()
+        reportsStack.arrangedSubviews.forEach { reportsStack.removeArrangedSubview($0); $0.removeFromSuperview() }
+        progress.doubleValue = 0
+        progress.isHidden = true
+        status.stringValue = "Completed conversions will appear below with artwork and import details."
+        sourceSummary.stringValue = "Choose audio files and/or folders to scan."
+        convertButton.isEnabled = false
+        clearButton.isEnabled = false
     }
 
     private func filesToConvert() -> [URL] {
@@ -188,6 +198,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let summary = sources.map(\.path).joined(separator: "\n")
         sourceSummary.stringValue = summary + "\n\(files.count) supported audio file(s) found (including nested folders)"
         convertButton.isEnabled = !files.isEmpty
+        clearButton.isEnabled = !sources.isEmpty
     }
 
     private static var recoveryFolder: URL {
@@ -291,7 +302,9 @@ end tell
     @objc private func convert() {
         let files = filesToConvert()
         guard !files.isEmpty else { return }
+        isConverting = true
         convertButton.isEnabled = false
+        clearButton.isEnabled = false
         progress.isHidden = false
         progress.doubleValue = 0
         status.stringValue = "Converting and adding tracks to Music…"
@@ -300,7 +313,7 @@ end tell
         DispatchQueue.global(qos: .userInitiated).async {
             do { try FileManager.default.createDirectory(at: Self.recoveryFolder, withIntermediateDirectories: true) }
             catch {
-                DispatchQueue.main.async { self.status.stringValue = "Could not create recovery folder: \(error.localizedDescription)"; self.convertButton.isEnabled = true }
+                DispatchQueue.main.async { self.status.stringValue = "Could not create recovery folder: \(error.localizedDescription)"; self.convertButton.isEnabled = true; self.clearButton.isEnabled = !self.sources.isEmpty; self.isConverting = false }
                 return
             }
             var completed = 0
@@ -355,6 +368,8 @@ end tell
             DispatchQueue.main.async {
                 self.status.stringValue = "Finished: \(completed) added to Music, \(failed) failed. Review each track below."
                 self.convertButton.isEnabled = true
+                self.clearButton.isEnabled = !self.sources.isEmpty
+                self.isConverting = false
             }
         }
     }

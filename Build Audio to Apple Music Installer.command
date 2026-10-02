@@ -19,7 +19,7 @@ swift "$here/AppIcon.swift" "$iconset"
 iconutil -c icns -o "$here/AppIcon.icns" "$iconset"
 cp "$here/AppIcon.icns" "$contents/Resources/AppIcon.icns"
 
-cat > "$contents/Info.plist" <<'PLIST'
+cat > "$contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>

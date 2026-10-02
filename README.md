@@ -37,6 +37,6 @@ Build products and extracted FFmpeg sources are generated locally and are exclud
 
 ## Use
 
-Choose audio files or folders, then click **Convert & Add to Music**. The app shows a result card for each track with its available metadata, artwork, conversion status, and import status. Original files are kept in place. A converted `.m4a` is removed after Music confirms it copied the file; it is retained in the app's Recovery folder when Music uses that file or cannot confirm its library location, and after a failure.
+Choose supported audio files, folders, or both with **Choose Files or Folder…**. Folder scans include nested folders. Click **Clear** to remove the selection and clear the conversion results. Click **Convert & Add to Music** to process the selection. The app shows a result card for each track with its available metadata, artwork, conversion status, and import status. Original files are kept in place. A converted `.m4a` is removed after Music confirms it copied the file; it is retained in the app's Recovery folder when Music uses that file or cannot confirm its library location, and after a failure.
 
 On first import, macOS may ask you to allow the app to control Music. Approve that request to add tracks.
