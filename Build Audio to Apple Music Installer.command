@@ -1,6 +1,7 @@
 #!/bin/zsh
 set -euo pipefail
 here=${0:A:h}
+version=${APP_VERSION:-2.0.1}
 stage="$here/ffmpeg-stage"
 app="$here/build/Audio to Apple Music.app"
 contents="$app/Contents"
@@ -28,8 +29,8 @@ cat > "$contents/Info.plist" <<'PLIST'
 <key>CFBundleDisplayName</key><string>Audio to Apple Music</string>
 <key>CFBundleIconFile</key><string>AppIcon</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleVersion</key><string>3</string>
-<key>CFBundleShortVersionString</key><string>2.0.1</string>
+<key>CFBundleVersion</key><string>$version</string>
+<key>CFBundleShortVersionString</key><string>$version</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
 <key>NSAppleEventsUsageDescription</key><string>Add converted local audio files to your Apple Music library and verify their file location.</string>
 <key>LSApplicationCategoryType</key><string>public.app-category.music</string>
@@ -51,5 +52,5 @@ mkdir -p "$staging/Applications"
 rm -rf "$staging/Applications/FLAC to Apple Music.app"
 rm -rf "$staging/Applications/Audio to Apple Music.app"
 COPYFILE_DISABLE=1 ditto --norsrc "$app" "$staging/Applications/Audio to Apple Music.app"
-pkgbuild --root "$staging" --identifier local.codex.audiotoapplemusic.pkg --version 2.0.1 --install-location / "$here/Audio to Apple Music.pkg"
+pkgbuild --root "$staging" --identifier local.codex.audiotoapplemusic.pkg --version "$version" --install-location / "$here/Audio to Apple Music.pkg"
 open -R "$here/Audio to Apple Music.pkg"

@@ -1,0 +1,43 @@
+name: Build and publish macOS installer
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-14
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build bundled FFmpeg
+        run: zsh "Build Bundled FFmpeg.command"
+
+      - name: Set app version from tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          version="${RELEASE_TAG#v}"
+          echo "APP_VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Build app and installer
+        run: zsh "Build Audio to Apple Music Installer.command"
+
+      - name: Create checksum
+        run: shasum -a 256 "Audio to Apple Music.pkg" > "Audio to Apple Music.pkg.sha256"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" \
+            "Audio to Apple Music.pkg" \
+            "Audio to Apple Music.pkg.sha256" \
+            --title "Audio to Apple Music ${RELEASE_TAG#v}" \
+            --generate-notes

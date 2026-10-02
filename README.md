@@ -20,6 +20,19 @@ Requirements: macOS 14 or later, Apple Music, Xcode command-line tools, and the 
 2. Run **Build Audio to Apple Music.command**. The script builds the app, adds the bundled FFmpeg tools and app icon, signs the local bundle, and creates `Audio to Apple Music.pkg`.
 3. Open the generated package and follow the Installer prompts.
 
+## GitHub releases
+
+Releases are built automatically on GitHub Actions when a semantic version tag is pushed. The workflow compiles the bundled FFmpeg tools on a macOS runner, builds the versioned app and installer package, calculates a SHA-256 checksum, and attaches both files to a GitHub Release.
+
+To publish a release, push a tag such as `v2.1.0`:
+
+```sh
+git tag -a v2.1.0 -m "Audio to Apple Music 2.1.0"
+git push origin v2.1.0
+```
+
+The workflow creates the GitHub Release and uploads `Audio to Apple Music.pkg` and its `.sha256` checksum. You can follow progress in the repository's Actions tab.
+
 Build products and extracted FFmpeg sources are generated locally and are excluded from Git. The FFmpeg LGPL license and exact source archive are included in this repository and in the app bundle.
 
 ## Use
