@@ -1,0 +1,34 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+		A10000000000000000000001 /* App source */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioToMusicApp.swift; sourceTree = "<group>"; };
+		A10000000000000000000002 /* Products */ = {isa = PBXGroup; children = (A10000000000000000000004,); name = Products; sourceTree = "<group>"; };
+		A10000000000000000000003 /* Main group */ = {isa = PBXGroup; children = (A10000000000000000000001, A10000000000000000000016, A10000000000000000000018, A10000000000000000000020, A10000000000000000000002,); sourceTree = "<group>"; };
+		A10000000000000000000004 /* Audio to Apple Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audio to Apple Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000005 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A1000000000000000000000A,); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000006 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000007 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000017, A10000000000000000000019, A10000000000000000000021,); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000008 /* App target */ = {isa = PBXNativeTarget; buildConfigurationList = A1000000000000000000000D; buildPhases = (A10000000000000000000005, A10000000000000000000006, A10000000000000000000007,); buildRules = (); dependencies = (); name = "Audio to Apple Music"; productName = "Audio to Apple Music"; productReference = A10000000000000000000004; productType = "com.apple.product-type.application"; };
+		A10000000000000000000009 /* Project */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 2700; TargetAttributes = {A10000000000000000000008 = {CreatedOnToolsVersion = 27.0; };};}; buildConfigurationList = A1000000000000000000000C; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; mainGroup = A10000000000000000000003; productRefGroup = A10000000000000000000002; projectDirPath = ""; projectRoot = ""; targets = (A10000000000000000000008,); };
+		A1000000000000000000000A /* App source build file */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001; };
+		A10000000000000000000016 /* App icon */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		A10000000000000000000017 /* App icon resource */ = {isa = PBXBuildFile; fileRef = A10000000000000000000016; };
+		A10000000000000000000018 /* Bundled FFmpeg */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.executable; path = "ffmpeg-stage/bin/ffmpeg"; sourceTree = "<group>"; };
+		A10000000000000000000019 /* FFmpeg resource */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018; };
+		A10000000000000000000020 /* Bundled FFprobe */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.executable; path = "ffmpeg-stage/bin/ffprobe"; sourceTree = "<group>"; };
+		A10000000000000000000021 /* FFprobe resource */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020; };
+		A1000000000000000000000B /* Project configuration */ = {isa = XCConfigurationList; buildConfigurations = (A1000000000000000000000E, A1000000000000000000000F,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A1000000000000000000000C /* Project configuration list */ = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000010, A10000000000000000000011,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A1000000000000000000000D /* Target configuration list */ = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000012, A10000000000000000000013,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A1000000000000000000000E /* Debug project */ = {isa = XCBuildConfiguration; buildSettings = {MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0;}; name = Debug; };
+		A1000000000000000000000F /* Release project */ = {isa = XCBuildConfiguration; buildSettings = {MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0;}; name = Release; };
+		A10000000000000000000010 /* Debug target */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGNING_ALLOWED = NO; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "Audio to Apple Music"; INFOPLIST_KEY_CFBundleIconFile = AppIcon; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music"; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = local.codex.audiotoapplemusic; PRODUCT_NAME = "Audio to Apple Music"; SWIFT_VERSION = 5.0;}; name = Debug; };
+		A10000000000000000000011 /* Release target */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGNING_ALLOWED = NO; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "Audio to Apple Music"; INFOPLIST_KEY_CFBundleIconFile = AppIcon; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music"; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = local.codex.audiotoapplemusic; PRODUCT_NAME = "Audio to Apple Music"; SWIFT_VERSION = 5.0;}; name = Release; };
+		A10000000000000000000012 /* Debug app target */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGNING_ALLOWED = NO; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "Audio to Apple Music"; INFOPLIST_KEY_CFBundleIconFile = AppIcon; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = local.codex.audiotoapplemusic; PRODUCT_NAME = "Audio to Apple Music"; SWIFT_VERSION = 5.0;}; name = Debug; };
+		A10000000000000000000013 /* Release app target */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGNING_ALLOWED = NO; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "Audio to Apple Music"; INFOPLIST_KEY_CFBundleIconFile = AppIcon; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = local.codex.audiotoapplemusic; PRODUCT_NAME = "Audio to Apple Music"; SWIFT_VERSION = 5.0;}; name = Release; };
+	};
+	rootObject = A10000000000000000000009;
+}
